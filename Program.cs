@@ -1,4 +1,6 @@
 using BlazingPizza;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,17 @@ using (var scope = scopeFactory.CreateScope())
     }
 }
 
+// Set culture to Philippines 
+var cultureInfo = new CultureInfo("en-PH"); // Change "en-PH" to my country code
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(cultureInfo),
+    SupportedCultures = new List<CultureInfo> { cultureInfo },
+    SupportedUICultures = new List<CultureInfo> { cultureInfo }
+});
 
 app.Run();
 
